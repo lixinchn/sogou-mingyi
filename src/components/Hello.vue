@@ -1,8 +1,7 @@
 <template>
   <div class="hello">
     <div class="head">
-      <img src="" />
-      <p>搜狗明医</p>
+      <img src="../assets/img/mingyi.png" />
     </div>
 
     <div class="h-title">
@@ -61,7 +60,7 @@
 
       <p class="c-detail-bottom">感谢您见证搜狗AI技术取得的巨大成就。</p>
 
-      <img class="stamp" src="" />
+      <img class="stamp" src="../assets/img/stamp.png" />
     </div>
   </div>
 </template>
@@ -98,6 +97,10 @@ h1, h2 {
   display: inline-block;
 }
 
+.head img {
+  height: 1em;
+}
+
 .h-title {
   text-align: center;
 }
@@ -109,7 +112,7 @@ h1 {
 
 h2 {
   font-size: 1.5em;
-  margin-top: 1em;
+  margin-top: 0.5em;
 }
 
 .split {
@@ -120,7 +123,7 @@ h2 {
 
 .p-data {
   text-align: left;
-  margin: 2em 0;
+  margin: 1em 0 2em 0;
 }
 
 .p-data-left, .p-data-right {
@@ -187,7 +190,7 @@ h2 {
 
 .c-detail-data {
   margin-left: 1em;
-  margin-bottom: 3em;
+  margin-bottom: 1.5em;
 }
 
 .c-detail-data p {
@@ -206,5 +209,13 @@ h2 {
   min-width: 3em;
   text-align: center;
   border-bottom: 1px dashed black;
+}
+
+.stamp {
+  width: 8em;
+  float: right;
+  position: relative;
+  top: -5em;
+  right: -1em;
 }
 </style>
