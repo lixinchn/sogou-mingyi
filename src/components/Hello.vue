@@ -14,6 +14,10 @@
     <div class="p-data">
       <div class="p-data-left">
         <div>
+          <!-- <div class="p-data-c">
+            <p>姓名：</p>
+            <p class="p-data-c-data">{{name}}</p>
+          </div> -->
           <div class="p-data-c">
             <p>性别：</p>
             <p class="p-data-c-data">{{gender}}</p>
@@ -23,10 +27,10 @@
             <p class="p-data-c-data">{{age}}</p>
           </div>
         </div>
-        <p class="p-data-cong">祝贺您成为搜狗AI口腔实验室的第  {{count}}  位体检员</p>
+        <p class="p-data-cong">祝贺您成为搜狗AI口腔实验室的第  {{player}}  位体检员</p>
       </div>
       <div class="p-data-right">
-        <img src="" />
+        <img v-bind:src="imageData" />
       </div>
     </div>
 
@@ -38,8 +42,9 @@
         <li>
           <p>1. 基本资料</p>
           <div class="c-detail-data">
-            <p>口腔魅力值<span class="c-detail-c-data">{{mouth}}</span>，</p>
-            <p>颜值分数<span class="c-detail-c-data">{{face}}</span>。</p>
+            <p>口腔魅力值<span class="c-detail-c-data">{{mouthScore}}</span>，</p>
+            <p>颜值分数<span class="c-detail-c-data">{{faceScore}}</span>。</p>
+            <p class="c-desc">{{mouthDesc}}</p>
           </div>
         </li>
 
@@ -47,6 +52,7 @@
           <p>2. 常规检测</p>
           <div class="c-detail-data">
             <p>魔音魅力值<span class="c-detail-c-data">{{sound}}</span>。</p>
+            <p class="c-desc">{{soundDesc}}</p>
           </div>
         </li>
 
@@ -54,6 +60,7 @@
           <p>3. 深度检测</p>
           <div class="c-detail-data">
             <p>口齿准确度<span class="c-detail-c-data">{{fluency}}</span>。</p>
+            <p class="c-desc">{{twisterDesc}}</p>
           </div>
         </li>
       </ul>
@@ -68,15 +75,39 @@
 <script>
 export default {
   name: 'hello',
+
+  created() {
+    let id = this.$route.query.id
+    this.$http.get('http://share.robot.sogou.com/load?id=' + id).then(response => {
+      this.name = response.body.name
+      this.gender = response.body.gender
+      this.age = response.body.age
+      this.player = response.body.player
+      this.imageData = 'data:image/png;base64,' + response.body.image_data
+      this.mouthScore = response.body.mouth_score
+      this.faceScore = response.body.face_score
+      this.sound = response.body.db
+      this.fluency = response.body.twister_score + '%'
+      this.mouthDesc = response.body.mouth_desc
+      this.soundDesc = response.body.sound_desc
+      this.twisterDesc = response.body.twister_desc
+    })
+  },
+
   data () {
     return {
-      gender: '男',
-      age: 18,
-      count: 88,
-      mouth: 100,
-      face: 100,
-      sound: 100,
-      fluency: 100,
+      name: '',
+      gender: '',
+      age: '',
+      player: '',
+      mouthScore: '',
+      faceScore: '',
+      sound: '',
+      fluency: '',
+      imageData: '',
+      mouthDesc: '',
+      soundDesc: '',
+      twisterDesc: '',
     }
   }
 }
@@ -108,6 +139,7 @@ h1, h2 {
 h1 {
   font-size: 2em;
   letter-spacing: 0.3em;
+  margin-bottom: 0.3em;
 }
 
 h2 {
@@ -124,6 +156,7 @@ h2 {
 .p-data {
   text-align: left;
   margin: 1em 0 2em 0;
+  position: relative;
 }
 
 .p-data-left, .p-data-right {
@@ -132,9 +165,9 @@ h2 {
 }
 
 .p-data-left {
-  width: 70%;
+  width: 75%;
   position: relative;
-  left: 1em;
+  left: 0.3em;
 }
 
 .p-data-left p {
@@ -151,31 +184,23 @@ h2 {
   border-bottom: 1px dashed black;
 }
 
-/*.p-data-c-data::after {
-  content: '- - - - - - -';
-  position: relative;
-  left: -1em;
-  top: 1em;
-}*/
-
 .p-data-right {
-  width: 20%;
+  position: absolute;
+  right: 0.3em;
 }
 
 .p-data-right img {
   background: #dcdcdc;
-  min-height: 8em;
-}
-
-.p-data-right img {
-  width: 100%;
+  height: 6.4rem;
+  width: 4.8rem;
 }
 
 .p-data-cong {
   color: #f33344;
   font-size: 0.7em;
   position: relative;
-  bottom: -4em;
+  max-width: 90%;
+  bottom: -2em;
 }
 
 .content {
@@ -202,6 +227,7 @@ h2 {
   opacity: 0.7;
   margin: 0 3%;
   padding-left: 1.5em;
+  max-width: 58%;
 }
 
 .c-detail-c-data {
@@ -217,5 +243,11 @@ h2 {
   position: relative;
   top: -5em;
   right: -1em;
+}
+
+.c-desc {
+  opacity: 0.7;
+  font-size: 0.6em;
+  max-width: 78%;
 }
 </style>
