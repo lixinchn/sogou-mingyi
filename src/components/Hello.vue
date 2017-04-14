@@ -23,7 +23,7 @@
             <p class="p-data-c-data">{{gender}}</p>
           </div>
           <div class="p-data-c">
-            <p>年龄：</p>
+            <p>颜龄：</p>
             <p class="p-data-c-data">{{age}}</p>
           </div>
         </div>
